@@ -24,7 +24,7 @@ import org.json.JSONException;
 public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
-    private Button login;
+    private Button boton;
 
     private Button registro;
     private Context context= this;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.usuario);
         password = findViewById( R.id.contraseña);
-        login = findViewById(R.id.login);
+        boton = findViewById(R.id.login);
         registro=findViewById(R.id.resgistro);
 
         registro.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +55,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        login.setOnClickListener(new View.OnClickListener() {
+        boton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {loginUsuario();}
+            public void onClick(View v) {loginUser();}
         });
         queue = Volley.newRequestQueue(this);
     }
 
-    private void loginUsuario() {
+    private void loginUser() {
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
                 "https://63e9e3c7811db3d7ef02768b.mockapi.io/usersData?username="+username.getText().toString(),
@@ -71,18 +71,18 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         int token;
-                        String contraseña;
+                        String pw;
                         try {
                             token = response.getJSONObject(0).getInt("id");
-                            contraseña = response.getJSONObject(0).getString("password");
-                            Toast.makeText(context,contraseña,Toast.LENGTH_SHORT).show();
+                            pw = response.getJSONObject(0).getString("password");
+                            Toast.makeText(context,pw,Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        if (password.getText().toString().equals(contraseña)){
+                        if (password.getText().toString().equals(pw)){
                             Toast.makeText(context, "Token: " + token, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context, CrearCuentaActivity.class);
-                            context.startActivity(intent);
+                            Intent I = new Intent(context, NavigationDrawerActivity.class);
+                            context.startActivity(I);
                             SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("VALID_USERNAME", username.getText().toString());

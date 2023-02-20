@@ -18,6 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/indice"
+        android:layout_width="411dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registro"
+        app:srcCompat="@drawable/indice" />
+
     <EditText
         android:id="@+id/usuario"
         android:layout_width="match_parent"
@@ -28,7 +39,7 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registro" />
+        app:layout_constraintTop_toBottomOf="@+id/indice" />
 
     <EditText
         android:id="@+id/contraseña"

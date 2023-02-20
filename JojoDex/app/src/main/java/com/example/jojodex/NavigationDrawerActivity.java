@@ -59,14 +59,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         Fragment fragment=null;
         int title;
         switch (item.getItemId()) {
-            case R.id.inicio:
-                fragment=new FragmentInicio();
-                title = R.string.inicio;
-                drawerLayout.closeDrawer(GravityCompat.START);
-                getSupportActionBar().setTitle(title);
-                callFragmnent(fragment);
 
-                break;
             case R.id.personajes:
                 title = R.string.personajes;
                 fragment=new FragmentPersonajesJojo();

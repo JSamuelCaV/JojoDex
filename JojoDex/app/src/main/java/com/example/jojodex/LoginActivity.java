@@ -83,12 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(context, "Token: " + token, Toast.LENGTH_LONG).show();
                             Intent I = new Intent(context, NavigationDrawerActivity.class);
                             context.startActivity(I);
-                            SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("VALID_USERNAME", username.getText().toString());
-                            editor.putInt("userId", token);
-                            editor.apply();
-                            finish();
+
                         }else {
                             Toast.makeText(context,"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
                         }

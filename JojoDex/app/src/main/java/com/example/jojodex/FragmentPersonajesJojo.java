@@ -1,64 +1,104 @@
 package com.example.jojodex;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPersonajesJojo#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentPersonajesJojo extends Fragment {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    public FragmentPersonajesJojo() {
-        // Required empty public constructor
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class FragmentPersonajesJojo extends Fragment implements Response.Listener<JSONArray>,Response.ErrorListener {
+
+    private RecyclerView recyclerView;
+
+    RequestQueue queue;
+
+    JsonArrayRequest js;
+    EditText editText;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_personajes_jojo, container, false);
+        recyclerView = view.findViewById(R.id.recycler_view_personaje);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        queue = Volley.newRequestQueue(getContext());
+        editText = view.findViewById(R.id.busqueda_personaje);
+
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    String texto = editText.getText().toString();
+                    cargaDatos(texto);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return view;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentPersonajesJojo.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentPersonajesJojo newInstance(String param1, String param2) {
-        FragmentPersonajesJojo fragment = new FragmentPersonajesJojo();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void cargaDatos(String texto) {
+        String url = "https://63e9e3c7811db3d7ef02768b.mockapi.io/JojoData?search=" + texto;
+        js=new JsonArrayRequest(Request.Method.GET,url,null,this,this);
+        queue.add(js);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getContext(), "could not connect" + error.toString(), Toast.LENGTH_SHORT).show();
+        System.out.println();
+
+        Log.d("Error: ", error.toString());
+
+    }
+
+    @Override
+    public void onResponse(JSONArray response) {
+        List<DatosPersonajes> todosLosPersonajes =new ArrayList<DatosPersonajes>();
+        try {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject personajes = response.getJSONObject(i);
+                DatosPersonajes datos = new DatosPersonajes(personajes);
+                todosLosPersonajes.add(datos);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-    }
+        RecyclerViewPersonajesAdapter adapter = new RecyclerViewPersonajesAdapter(todosLosPersonajes, getActivity());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personajes_jojo, container, false);
     }
 }

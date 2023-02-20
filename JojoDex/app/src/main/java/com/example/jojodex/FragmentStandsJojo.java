@@ -82,6 +82,19 @@ public class FragmentStandsJojo extends Fragment implements Response.Listener<JS
 
     @Override
     public void onResponse(JSONArray response) {
+        List<DatosStands> todosLosStands =new ArrayList<DatosStands>();
+        try {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject stands = response.getJSONObject(i);
+                DatosStands datos = new DatosStands(stands);
+                todosLosStands.add(datos);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RecyclerViewStandsAdapter adapter = new RecyclerViewStandsAdapter(todosLosStands, getActivity());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
     }
-}
+    }

@@ -35,5 +35,6 @@ public class StandsViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+        // Se guarda el valor que se ha seleccionado en el Recycler para pasarlo  la actividad StandsActivity
     }
 }

@@ -18,6 +18,7 @@ public class RecyclerViewStandsAdapter extends RecyclerView.Adapter<StandsViewHo
         this.todosLosStands=todosLosStands;
         this.activity=activity;
     }
+    //Se hace un array con los DatosStands
 
     @NonNull
     @Override
@@ -32,6 +33,7 @@ public class RecyclerViewStandsAdapter extends RecyclerView.Adapter<StandsViewHo
     public void onBindViewHolder(@NonNull StandsViewHolder holder, int position) {
     DatosStands dataPosition= todosLosStands.get(position);
     holder.enseñarStands(dataPosition,activity);
+        //Se pasa el array de datos del viewHolder con la posicion del array que se ha seleccionado
 
     }
 
@@ -39,4 +41,6 @@ public class RecyclerViewStandsAdapter extends RecyclerView.Adapter<StandsViewHo
     public int getItemCount() {
         return todosLosStands.size();
     }
+    //Da la cantidad de Personajes que hay registrados en el FragmentStandsJojo
+
 }

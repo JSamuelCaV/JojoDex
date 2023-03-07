@@ -30,3 +30,4 @@ public class DatosPersonajes {
         return image_character;
     }
 }
+// Se cogen los datos tanto de nombre como de descripcion como de la imagen de los personajes

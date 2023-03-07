@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class CrearCuentaActivity extends AppCompatActivity {
 
     private EditText usuario, contraseña, confirmar_contraseña;
-
+// Se crean las variables necesarias para que se pueda hacer una cuenta en la app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,27 +39,29 @@ public class CrearCuentaActivity extends AppCompatActivity {
                 susuario=usuario.getText().toString();
                 if(susuario.matches("")){
                     Toast.makeText(view.getContext(),"Necesitas añadir el nombre de usuario dentro de la casilla",Toast.LENGTH_SHORT).show();
-
+                //Se pasa a string el valor usuario dentro que introduce el del EditText comprobando que no esté vacia
                 }
                 contraseña=findViewById(R.id.contraseña);
                 scontraseña=contraseña.getText().toString();
                 if(scontraseña.matches("")){
                     Toast.makeText(view.getContext(),"Necesitas añadir la contraseña dentro de la casilla",Toast.LENGTH_SHORT).show();
-
+                    //Se pasa a string el valor contraseña dentro que introduce el del EditText comprobando que no esté vacia
                 }
                 confirmar_contraseña=findViewById(R.id.confirmar_contraseña);
                 sconfirmar_contraseña=confirmar_contraseña.getText().toString();
 
                 if(sconfirmar_contraseña.matches("")){
                     Toast.makeText(view.getContext(),"Necesitas añadir la confirmacion de la contraseña dentro de la casilla",Toast.LENGTH_SHORT).show();
+                    //Se pasa a string el valor contraseña dentro que introduce el del EditText comprobando que no esté vacia
 
                 }
                 if (!scontraseña.equals(sconfirmar_contraseña)){
                     Toast.makeText(view.getContext(),"La contraseña y la confirmación de la misma tienen que ser iguales",Toast.LENGTH_SHORT).show();
-
+                // Se compara la contraseña con las confirmación de la misma para saber si son iguales y si lo son no mostraría el toast
                 }
                 if (susuario!="" && scontraseña!="" && sconfirmar_contraseña!="" && scontraseña.equals(sconfirmar_contraseña)){
                     crearUsuario(view,susuario,scontraseña);
+                    // Se confirma que todo está correcto y si es el caso se procede a avanzar al método crearUsuario
                 }
             }
         });
@@ -72,16 +74,19 @@ public class CrearCuentaActivity extends AppCompatActivity {
             jsonObject.put("password",scontraseña);
         }catch(JSONException e){
             e.printStackTrace();
+            //se añaden los datos de usuario y de contraseña para pasarlos al mockapi
         }
         String url="https://63e9e3c7811db3d7ef02768b.mockapi.io/usersData";
         JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(
                 Request.Method.POST,
                 url, jsonObject, new Response.Listener<JSONObject>() {
+                    // Se proporciona la información para introducirla con un POST en el mockapi
             @Override
             public void onResponse(JSONObject response) {
                 Toast.makeText(view.getContext(), "Creando usuario", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(intent);
+                //si funciona correctamente se incluira por pantalla un toast e ira a la pantalla de login
             }
         },
                 new Response.ErrorListener() {
@@ -91,6 +96,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
                         Log.d("Error: ",error.toString());
                     }
                 });
+        //En caso contrario se incluye un toast pero no cambia de pantalla debido al error
         queue.add(jsonObjectRequest);
     }
 }

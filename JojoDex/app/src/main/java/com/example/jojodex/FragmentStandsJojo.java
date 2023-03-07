@@ -64,6 +64,7 @@ public class FragmentStandsJojo extends Fragment implements Response.Listener<JS
 
         return view;
     }
+//Se filtra por el valor que introduce el usuario dentro del editText y pulsar enter buscará el texto que ha escrito
 
     public void cargaDatos(String texto) {
         String url = "https://63e9e3c7811db3d7ef02768b.mockapi.io/JojoData?search=" + texto;
@@ -79,6 +80,7 @@ public class FragmentStandsJojo extends Fragment implements Response.Listener<JS
         Log.d("Error: ", error.toString());
 
     }
+// Conecta con mockapi para poder usar los datos
 
     @Override
     public void onResponse(JSONArray response) {
@@ -97,4 +99,6 @@ public class FragmentStandsJojo extends Fragment implements Response.Listener<JS
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
     }
-    }
+    //Se pasan los datos recibidos del mockapi a un recyclerView
+
+}

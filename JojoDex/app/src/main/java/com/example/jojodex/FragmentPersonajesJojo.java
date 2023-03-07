@@ -68,13 +68,13 @@ public class FragmentPersonajesJojo extends Fragment implements Response.Listene
 
         return view;
     }
-
+//Se filtra por el valor que introduce el usuario dentro del editText y pulsar enter buscará el texto que ha escrito
     public void cargaDatos(String texto) {
         String url = "https://63e9e3c7811db3d7ef02768b.mockapi.io/JojoData?search=" + texto;
         js=new JsonArrayRequest(Request.Method.GET,url,null,this,this);
         queue.add(js);
     }
-
+// Conecta con mockapi para poder usar los datos
     @Override
     public void onErrorResponse(VolleyError error) {
         Toast.makeText(getContext(), "could not connect" + error.toString(), Toast.LENGTH_SHORT).show();
@@ -101,4 +101,5 @@ public class FragmentPersonajesJojo extends Fragment implements Response.Listene
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
     }
+    //Se pasan los datos recibidos del mockapi a un recyclerView
 }

@@ -37,7 +37,7 @@ public class PersonajesActivity extends AppCompatActivity {
 
         descripcion=(String)bundle.get("descripcion");
         textView2.setText(descripcion);
-
+//Se reciben los valores otorgados por el PersonajesViewHolder y se añaden a los textView para poder enseñarse por pantalla al usuario
         image_character=(String)bundle.get("image_character");
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -73,4 +73,6 @@ public class PersonajesActivity extends AppCompatActivity {
             return null;
         }
     }
+    //Este metodo sirve para poder pasar un link de una imagen y con ese link transformarlo en la propia imagen
+
 }

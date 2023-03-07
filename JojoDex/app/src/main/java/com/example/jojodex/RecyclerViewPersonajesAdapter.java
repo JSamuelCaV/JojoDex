@@ -20,6 +20,7 @@ public class RecyclerViewPersonajesAdapter extends RecyclerView.Adapter<Personaj
     public RecyclerViewPersonajesAdapter(List<DatosPersonajes> todosLosPersonajes,Activity activity){
         this.todosLosPersonajes=todosLosPersonajes;
         this.activity=activity;
+        //Se hace un array con los DatosPersonajes
     }
 
     @NonNull
@@ -29,16 +30,19 @@ public class RecyclerViewPersonajesAdapter extends RecyclerView.Adapter<Personaj
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(layoutParams);
         return new PersonajesViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull PersonajesViewHolder holder, int position) {
         DatosPersonajes datosPosicion= todosLosPersonajes.get(position);
         holder.enseñarDatos(datosPosicion,activity);
+        //Se pasa el array de datos del viewHolder con la posicion del array que se ha seleccionado
     }
 
     @Override
     public int getItemCount() {
         return todosLosPersonajes.size();
     }
+    //Da la cantidad de Personajes que hay registrados en el FragmentPersonajesJojo
 }

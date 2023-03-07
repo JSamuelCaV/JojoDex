@@ -33,6 +33,7 @@ String stand,ability ,image_stands;
         ability=(String)bundle.get("ability");
         textView1.setText(ability);
         image_stands=(String) bundle.get("image_stands");
+        //Se reciben los valores otorgados por el StandsViewHolder y se añaden a los textView para poder enseñarse por pantalla al usuario
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -67,4 +68,5 @@ String stand,ability ,image_stands;
             return null;
         }
     }
+    //Este metodo sirve para poder pasar un link de una imagen y con ese link transformarlo en la propia imagen
 }

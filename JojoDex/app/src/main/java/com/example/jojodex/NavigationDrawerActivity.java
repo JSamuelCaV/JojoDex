@@ -42,8 +42,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         menuItem.setChecked(true);
 
         drawerLayout.addDrawerListener(this);
-
     }
+    //Se pasan los valores tanto de la toolbar como de los valores del Menu creados para hacer que funcione el NavigationDrawer
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -53,7 +53,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
         }
     }
-
+// Sirve para desplegar o cerrar el NavigationDrawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment=null;
@@ -79,7 +79,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         return true;
     }
-
+//Se seleccionan los datos que hacen falta para que se salga por pantalla los datos del fragment seleccionado
 
     public void callFragmnent(Fragment fragment){
 
@@ -89,6 +89,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         transaction.addToBackStack(null);
         transaction.commit();
     }
+    //Este metodo llama al Fragment correspondiente seleccionado en el anterior paso
     @Override
     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
@@ -99,12 +100,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         Toast.makeText(this, getString(R.string.navigation_drawer_abierto),
                 Toast.LENGTH_SHORT).show();
     }
-
+// Crea un toast cuando se abre el NavigationDrawer
     @Override
     public void onDrawerClosed(@NonNull View drawerView) {
         Toast.makeText(this, getString(R.string.navigation_drawer_cerrado),
                 Toast.LENGTH_SHORT).show();
     }
+// Crea un toast cuando se cierra el NavigationDrawer
 
     @Override
     public void onDrawerStateChanged(int newState) {

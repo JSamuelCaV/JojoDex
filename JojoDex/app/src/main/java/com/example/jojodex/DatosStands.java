@@ -32,4 +32,4 @@ public class DatosStands  {
         return image_stand;
     }
 }
-
+// Se cogen los datos tanto las stands como la habilidad como de la imagen de los stands
